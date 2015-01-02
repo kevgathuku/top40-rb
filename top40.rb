@@ -7,7 +7,7 @@ require 'tmpdir'
 require 'youtube_search'
 
 # Source: https://developer.yahoo.com/ruby/ruby-cache.html
-class DiskFetcher
+class Top40Fetcher
   def initialize(
     url='http://ben-major.co.uk/labs/top40/api/singles/',
     cache_dir=Dir.tmpdir)
@@ -52,10 +52,6 @@ class DiskFetcher
   end
 end
 
-fetcher = DiskFetcher.new
+fetcher = Top40Fetcher.new
 fetcher.fetch
 fetcher.display
-# if 'links' in ARGV
-#   search = YoutubeSearch.search(content['entries'][0]['title']).first
-#   puts "#{content['entries'][0]['title']} -
-# http://youtu.be/#{search['video_id']}"
