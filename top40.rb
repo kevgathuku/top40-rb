@@ -36,7 +36,7 @@ class DiskFetcher
   def display
     content = JSON.load(File.read(@file_path, :encoding => 'utf-8'))
     content['entries'].each do |entry|
-      puts "#{entry['title']} by #{entry['artist']}"
+      puts "#{entry['position']}. #{entry['title']} by #{entry['artist']}"
     end
   end
 end
