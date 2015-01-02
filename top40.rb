@@ -33,17 +33,28 @@ class DiskFetcher
       end
   end
 
-  def display
+  def display(num = 10)
+    # Can take the number of songs to display as a command line argument
+    # Converts the number to an absolute value.
+    num = ARGV[0].to_i.abs if ARGV[0]
+    # Dirty handling if the first arg is not a number
+    num = 10 if num == 0
     content = JSON.load(File.read(@file_path, :encoding => 'utf-8'))
-    content['entries'].each do |entry|
-      puts "#{entry['position']}. #{entry['title']} by #{entry['artist']}"
+    # If the index is out of range, prints nothing
+    content['entries'][0..num-1].each do |entry|
+      if ARGV.include? 'links'
+        link = YoutubeSearch.search("#{entry['artist']} - #{entry['title']}").first
+        puts "#{entry['position']}. #{entry['artist']} - #{entry['title']} (http://youtu.be/#{link['video_id']})"
+      else
+        puts "#{entry['position']}. #{entry['artist']} - #{entry['title']}"
+      end
     end
   end
 end
 
 fetcher = DiskFetcher.new
 fetcher.fetch
-fetcher.display()
+fetcher.display
 # if 'links' in ARGV
 #   search = YoutubeSearch.search(content['entries'][0]['title']).first
 #   puts "#{content['entries'][0]['title']} -
