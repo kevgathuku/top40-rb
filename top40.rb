@@ -14,16 +14,16 @@ class DiskFetcher
       # this is the dir where we store our cache
       @cache_dir = cache_dir
       @url = url
+      @file_name = Digest::MD5.hexdigest(@url)
+      @file_path = File.join("", @cache_dir, @file_name)
   end
 
   def fetch(max_age = 43200)
-      file = Digest::MD5.hexdigest(@url)
-      file_path = File.join("", @cache_dir, file)
       # we check if the file -- a MD5 hexdigest of the URL -- exists
       #  in the dir. If it does and the data is fresh, we just read
       #  data from the file and return
-      if File.exist? file_path
-        return File.new(file_path).read if Time.now - File.mtime(file_path) < max_age
+      if File.exist? @file_path
+        return File.new(@file_path).read if Time.now - File.mtime(@file_path) < max_age
       end
       # if the file does not exist (or if the data is not fresh), we
       #  make an HTTP request and save it to a file
@@ -34,9 +34,7 @@ class DiskFetcher
   end
 
   def display
-    file_name = Digest::MD5.hexdigest(@url)
-    json_file = File.join("", @cache_dir, file_name)
-    content = JSON.load(File.read(json_file, :encoding => 'utf-8'))
+    content = JSON.load(File.read(@file_path, :encoding => 'utf-8'))
     content['entries'].each do |entry|
       puts "#{entry['title']} by #{entry['artist']}"
     end
