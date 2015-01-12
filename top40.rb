@@ -28,7 +28,7 @@ class Top40Fetcher
     end
     # if the file does not exist (or if the data is not fresh), we
     #  make an HTTP request and save it to a file
-    File.open(file_path, 'w') do |data|
+    File.open(@file_path, 'w') do |data|
       res = Net::HTTP.get_response(URI.parse(@url))
       data << res.body if res.code == '200'
     end
