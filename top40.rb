@@ -22,12 +22,12 @@ class Top40
   end
 
   def display(content, num: 10)
-    # Takes the number of songs to display as a command line argument
-    # Converts the number to an absolute value.
-    num = ARGV[0].to_i.abs if ARGV[0]
-    # Dirty handling if the first arg is not a number
-    num += 10 if num == 0
-    # If the index is out of range, prints nothing
+    # Takes the number of songs to display as a command line argument. Defaults to 10
+    # Returns the number of songs or 0 if ARGV[0] is not a number
+    if ARGV[0]
+      # Converts the number to an integer
+      num = ARGV[0].to_i.abs
+    end
     content['entries'][0..num - 1].each do |entry|
       output = "#{entry['position']}. #{entry['artist']} - #{entry['title']}"
       if ARGV.include? 'links'
