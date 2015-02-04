@@ -1,45 +1,33 @@
 #!/usr/bin/env ruby
 
-require 'digest'
+require 'api_cache'
 require 'json'
-require 'net/http'
+require 'moneta'
 require 'tmpdir'
 require 'youtube_search'
 
+APICache.store = Moneta.new(:File, dir: Dir.tmpdir)
+
 # Source: https://developer.yahoo.com/ruby/ruby-cache.html
-class Top40Fetcher
+class Top40
 
   def initialize(
     url: 'http://ben-major.co.uk/labs/top40/api/singles/')
     @url = url
-    @file_name = Digest::MD5.hexdigest(@url)
-    @file_path = File.join('', Dir.tmpdir, @file_name)
   end
 
-  def fetch(max_age = 43_200)
-    # we check if the file -- a MD5 hexdigest of the URL -- exists
-    #  in the dir. If it does and the data is fresh, we just read
-    #  data from the file and return
-    if File.exist? @file_path
-      return File.read(
-        @file_path) if Time.now - File.mtime(@file_path) < max_age
-    end
-    # if the file does not exist (or if the data is not fresh), we
-    #  make an HTTP request and save it to a file
-    File.open(@file_path, 'w') do |data|
-      res = Net::HTTP.get_response(URI.parse(@url))
-      data << res.body if res.code == '200'
-    end
+  def fetch
+    response = APICache.get(@url, options = {:cache => 43_200, :fail => "Failed to retrieve data"})
+    JSON.load(response)
   end
 
-  def display(num: 10)
-    # Takes the number of songs to display as a command line argument
-    # Converts the number to an absolute value.
-    num = ARGV[0].to_i.abs if ARGV[0]
-    # Dirty handling if the first arg is not a number
-    num += 10 if num == 0
-    content = JSON.load(File.read(@file_path, encoding: 'utf-8'))
-    # If the index is out of range, prints nothing
+  def display(content, num: 10)
+    # Takes the number of songs to display as a command line argument. Defaults to 10
+    # Returns the number of songs or 0 if ARGV[0] is not a number
+    if ARGV[0]
+      # Converts the number to an integer
+      num = ARGV[0].to_i.abs
+    end
     content['entries'][0..num - 1].each do |entry|
       output = "#{entry['position']}. #{entry['artist']} - #{entry['title']}"
       if ARGV.include? 'links'
@@ -53,6 +41,6 @@ class Top40Fetcher
   end
 end
 
-fetcher = Top40Fetcher.new
-fetcher.fetch
-fetcher.display
+fetcher = Top40.new
+content = fetcher.fetch
+fetcher.display(content)
