@@ -8,14 +8,12 @@ require 'youtube_search'
 
 # Source: https://developer.yahoo.com/ruby/ruby-cache.html
 class Top40Fetcher
+
   def initialize(
-    url: 'http://ben-major.co.uk/labs/top40/api/singles/',
-    cache_dir: Dir.tmpdir)
-    # this is the dir where we store our cache
-    @cache_dir = cache_dir
+    url: 'http://ben-major.co.uk/labs/top40/api/singles/')
     @url = url
     @file_name = Digest::MD5.hexdigest(@url)
-    @file_path = File.join('', @cache_dir, @file_name)
+    @file_path = File.join('', Dir.tmpdir, @file_name)
   end
 
   def fetch(max_age = 43_200)
