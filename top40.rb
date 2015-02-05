@@ -3,12 +3,12 @@
 require 'api_cache'
 require 'json'
 require 'moneta'
+require 'optparse'
 require 'tmpdir'
 require 'youtube_search'
 
 APICache.store = Moneta.new(:File, dir: Dir.tmpdir)
 
-# Source: https://developer.yahoo.com/ruby/ruby-cache.html
 class Top40
 
   def initialize(url: 'http://ben-major.co.uk/labs/top40/api/singles/')
@@ -21,15 +21,10 @@ class Top40
     @singles = JSON.load(response)['entries']
   end
 
-  def display(num: 10)
-    # Takes the number of songs to display as a command line argument. Defaults to 10
-    # Returns the number of songs or 0 if ARGV[0] is not a number
-    if ARGV[0]
-      num = ARGV[0].to_i.abs
-    end
-    @singles[0..num - 1].each do |entry|
+  def display(options)
+    @singles[0..options.num - 1].each do |entry|
       output = "#{entry['position']}. #{entry['artist']} - #{entry['title']}"
-      if ARGV.include? 'links'
+      if options.links
         link = YoutubeSearch.search(
           "#{entry['artist']} - #{entry['title']}").first
         puts "#{output} (http://youtu.be/#{link['video_id']})"
@@ -40,6 +35,37 @@ class Top40
   end
 end
 
+
+class Parser
+
+  def self.parse(args)
+    options = OpenStruct.new
+    options.links = false
+    options.num = 10
+
+    opt_parser = OptionParser.new do |opts|
+      opts.banner = "Usage: #{File.basename($PROGRAM_NAME)} [options]"
+
+    opts.on('-n', '--num NUMBER', Integer, "Number of songs to display (Default: #{options.num})") do |n|
+      options.num = n
+    end
+
+    opts.on('-l', '--links', 'Display Youtube links along with songs') do
+      options.links = true
+    end
+
+    opts.on("-h", "--help", "Prints this help") do
+      puts opts
+      exit
+      end
+    end
+
+    opt_parser.parse!(args)
+    return options
+  end
+end
+
+options = Parser.parse(ARGV)
 fetcher = Top40.new
 fetcher.fetch
-fetcher.display
+fetcher.display(options)
