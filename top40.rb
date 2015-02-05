@@ -22,17 +22,18 @@ class Top40
       cache: 43_200,
       fail: 'Failed to retrieve data')
     @singles = JSON.load(response)['entries']
+    @singles.each do |song|
+      link = YoutubeSearch.search(
+          "#{song['artist']} - #{song['title']}").first
+      song['link'] = "http://youtu.be/#{link['video_id']}"
+    end
   end
 
   def display(options)
     @singles[0..options.num - 1].each do |entry|
-      if options.links
-        link = YoutubeSearch.search(
-          "#{entry['artist']} - #{entry['title']}").first
-        puts "#{output} (http://youtu.be/#{link['video_id']})"
-      else
-        puts "#{entry['position']}. #{entry['artist']} - #{entry['title']}"
-      end
+      output = "#{entry['position']}. #{entry['artist']} - #{entry['title']}"
+      output << " (#{entry['link']})" if options.links
+      puts output
     end
   end
 end
