@@ -11,24 +11,23 @@ APICache.store = Moneta.new(:File, dir: Dir.tmpdir)
 # Source: https://developer.yahoo.com/ruby/ruby-cache.html
 class Top40
 
-  def initialize(
-    url: 'http://ben-major.co.uk/labs/top40/api/singles/')
+  def initialize(url: 'http://ben-major.co.uk/labs/top40/api/singles/')
     @url = url
+    @singles = Hash.new
   end
 
   def fetch
-    response = APICache.get(@url, options = {:cache => 43_200, :fail => "Failed to retrieve data"})
-    JSON.load(response)
+    response = APICache.get(@url, :cache => 43_200, :fail => "Failed to retrieve data")
+    @singles = JSON.load(response)['entries']
   end
 
-  def display(content, num: 10)
+  def display(num: 10)
     # Takes the number of songs to display as a command line argument. Defaults to 10
     # Returns the number of songs or 0 if ARGV[0] is not a number
     if ARGV[0]
-      # Converts the number to an integer
       num = ARGV[0].to_i.abs
     end
-    content['entries'][0..num - 1].each do |entry|
+    @singles[0..num - 1].each do |entry|
       output = "#{entry['position']}. #{entry['artist']} - #{entry['title']}"
       if ARGV.include? 'links'
         link = YoutubeSearch.search(
@@ -42,5 +41,5 @@ class Top40
 end
 
 fetcher = Top40.new
-content = fetcher.fetch
-fetcher.display(content)
+fetcher.fetch
+fetcher.display
