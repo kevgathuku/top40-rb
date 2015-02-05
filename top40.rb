@@ -22,6 +22,9 @@ class Top40
       cache: 43_200,
       fail: 'Failed to retrieve data')
     @singles = JSON.load(response)['entries']
+  end
+
+  def update_info
     @singles.each do |song|
       link = YoutubeSearch.search(
           "#{song['artist']} - #{song['title']}").first
@@ -74,4 +77,5 @@ end
 options = Parser.parse(ARGV)
 fetcher = Top40.new
 fetcher.fetch
+fetcher.update_info
 fetcher.display(options)
