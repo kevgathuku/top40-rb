@@ -26,13 +26,12 @@ class Top40
 
   def display(options)
     @singles[0..options.num - 1].each do |entry|
-      output = "#{entry['position']}. #{entry['artist']} - #{entry['title']}"
       if options.links
         link = YoutubeSearch.search(
           "#{entry['artist']} - #{entry['title']}").first
         puts "#{output} (http://youtu.be/#{link['video_id']})"
       else
-        puts output
+        puts "#{entry['position']}. #{entry['artist']} - #{entry['title']}"
       end
     end
   end
