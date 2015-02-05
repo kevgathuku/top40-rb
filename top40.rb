@@ -22,12 +22,9 @@ class Top40
   end
 
   def display(options)
-    if ARGV[0]
-      num = ARGV[0].to_i.abs
-    end
-    @singles[0..num - 1].each do |entry|
+    @singles[0..options.num - 1].each do |entry|
       output = "#{entry['position']}. #{entry['artist']} - #{entry['title']}"
-      if ARGV.include? 'links'
+      if options.links
         link = YoutubeSearch.search(
           "#{entry['artist']} - #{entry['title']}").first
         puts "#{output} (http://youtu.be/#{link['video_id']})"
@@ -69,6 +66,6 @@ class Parser
 end
 
 options = Parser.parse(ARGV)
-# fetcher = Top40.new
-# fetcher.fetch
-# fetcher.display
+fetcher = Top40.new
+fetcher.fetch
+fetcher.display(options)
