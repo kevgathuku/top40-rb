@@ -21,9 +21,7 @@ class Top40
     @singles = JSON.load(response)['entries']
   end
 
-  def display(num: 10)
-    # Takes the number of songs to display as a command line argument. Defaults to 10
-    # Returns the number of songs or 0 if ARGV[0] is not a number
+  def display(options)
     if ARGV[0]
       num = ARGV[0].to_i.abs
     end
@@ -49,7 +47,7 @@ class Parser
     options.num = 10
 
     opt_parser = OptionParser.new do |opts|
-      opts.banner = "Usage: top40.rb [options]"
+      opts.banner = "Usage: #{File.basename($PROGRAM_NAME)} [options]"
 
     opts.on('-n', '--num NUMBER', Integer, "Number of songs to display (Default: #{options.num})") do |n|
       options.num = n
@@ -71,7 +69,6 @@ class Parser
 end
 
 options = Parser.parse(ARGV)
-
 # fetcher = Top40.new
 # fetcher.fetch
 # fetcher.display
