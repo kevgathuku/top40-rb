@@ -2,6 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     api_cache (0.3.0)
+    dotenv (1.0.2)
     moneta (0.8.0)
     youtube_search (0.2.0)
 
@@ -10,5 +11,6 @@ PLATFORMS
 
 DEPENDENCIES
   api_cache (~> 0.3.0)
+  dotenv (~> 1.0.2)
   moneta (~> 0.8.0)
   youtube_search (~> 0.2.0)
