@@ -50,13 +50,13 @@ class Parser
       options.num = n
     end
 
-      opts.on('-l', '--links', 'Display Youtube links along with songs') do |n|
-        options.links = true
-      end
+    opts.on('-l', '--links', 'Display Youtube links along with songs') do
+      options.links = true
+    end
 
-      opts.on("-h", "--help", "Prints this help") do
-        puts opts
-        exit
+    opts.on("-h", "--help", "Prints this help") do
+      puts opts
+      exit
       end
     end
 
