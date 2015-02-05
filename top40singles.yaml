@@ -1,0 +1,242 @@
+---
+top40:
+- !ruby/struct:Single
+  title: Uptown Funk (feat. Bruno Mars)
+  artist: Mark Ronson
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/OPf0YbXqDm0
+- !ruby/struct:Single
+  title: Take Me To Church
+  artist: Hozier
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/MYSVMgRr6pw
+- !ruby/struct:Single
+  title: L.A. Love (La La)
+  artist: Fergie
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/GLyP0B2Q-R4
+- !ruby/struct:Single
+  title: Lips Are Movin
+  artist: Meghan Trainor
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/qDc_5zpBj7s
+- !ruby/struct:Single
+  title: FourFiveSeconds
+  artist: Kanye West, Rihanna & Paul McCartney
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/kt0g4dWxEBo
+- !ruby/struct:Single
+  title: Wish You Were Mine
+  artist: Philip George
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/d7ypnPjz81I
+- !ruby/struct:Single
+  title: Say Something
+  artist: Karen Harding
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/SiwgvQA8ksE
+- !ruby/struct:Single
+  title: Thinking Out Loud
+  artist: Ed Sheeran
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/lp-EO5I60KA
+- !ruby/struct:Single
+  title: Up (feat. Demi Lovato)
+  artist: Olly Murs
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/29GWMT0GB6s
+- !ruby/struct:Single
+  title: The Nights
+  artist: Avicii
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/UtF6Jej8yb4
+- !ruby/struct:Single
+  title: Elastic Heart
+  artist: Sia
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/KWZGAExj-es
+- !ruby/struct:Single
+  title: Heroes (We Could Be) (feat. Tove Lo)
+  artist: Alesso
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/a7SouU3ECpU
+- !ruby/struct:Single
+  title: Rhymes
+  artist: Hannah Wants & Chris Lorenzo
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/Fq8X753O_s8
+- !ruby/struct:Single
+  title: Blank Space
+  artist: Taylor Swift
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/e-ORhEE9VVg
+- !ruby/struct:Single
+  title: Like I Can
+  artist: Sam Smith
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/xeugznpGKPA
+- !ruby/struct:Single
+  title: Hold Back The River
+  artist: James Bay
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/mqiH0ZSkM9I
+- !ruby/struct:Single
+  title: All About That Bass
+  artist: Meghan Trainor
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/7PCkvCPvDXk
+- !ruby/struct:Single
+  title: Cool Kids
+  artist: Echosmith
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/SSCzDykng4g
+- !ruby/struct:Single
+  title: Something I Need
+  artist: Ben Haenow
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/zLBaaN2sqlc
+- !ruby/struct:Single
+  title: Outside (feat. Ellie Goulding)
+  artist: Calvin Harris
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/J9NQFACZYEU
+- !ruby/struct:Single
+  title: Real Love
+  artist: Clean Bandit & Jess Glynne
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/qdo_-U4PEsk
+- !ruby/struct:Single
+  title: Sugar
+  artist: Maroon 5
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/09R8_2nJtjg
+- !ruby/struct:Single
+  title: I Loved You (feat. Melissa Steel)
+  artist: Blonde
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/hqQY9UkGC_A
+- !ruby/struct:Single
+  title: Budapest
+  artist: George Ezra
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/VHrLPs3_1Fs
+- !ruby/struct:Single
+  title: Chandelier
+  artist: Sia
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/2vjPBrBU-TM
+- !ruby/struct:Single
+  title: Dangerous (feat. Sam Martin)
+  artist: David Guetta
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/EVr__5Addjw
+- !ruby/struct:Single
+  title: I'm Not The Only One
+  artist: Sam Smith
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/nCkpzqqog4k
+- !ruby/struct:Single
+  title: Promesses (feat. Kaleem Taylor)
+  artist: Tchami
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/CH0FbBuPlaQ
+- !ruby/struct:Single
+  title: Shake It Off
+  artist: Taylor Swift
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/nfWlot6h_JM
+- !ruby/struct:Single
+  title: The Heart Wants What It Wants
+  artist: Selena Gomez
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/ij_0p_6qTss
+- !ruby/struct:Single
+  title: Stay With Me
+  artist: Sam Smith
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/pB-5XG-DbAA
+- !ruby/struct:Single
+  title: Night Changes
+  artist: One Direction
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/syFZfO_wfMQ
+- !ruby/struct:Single
+  title: Earned It
+  artist: The Weeknd
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/NdDeWJRWsqY
+- !ruby/struct:Single
+  title: Bang Bang
+  artist: Jessie J, Ariana Grande & Nicki Minaj
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/0HDdjwpPM3Y
+- !ruby/struct:Single
+  title: Blame It On Me
+  artist: George Ezra
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/H4ifSrE8iSg
+- !ruby/struct:Single
+  title: Wrapped Up (feat. Travie McCoy)
+  artist: Olly Murs
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/niLMQsD9ZG4
+- !ruby/struct:Single
+  title: Don't
+  artist: Ed Sheeran
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/iD2rhdFRehU
+- !ruby/struct:Single
+  title: These Days
+  artist: Take That
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/I43R3jIFE74
+- !ruby/struct:Single
+  title: All Of Me
+  artist: John Legend
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/450p7goxZqg
+- !ruby/struct:Single
+  title: Blame (feat. John Newman)
+  artist: Calvin Harris
+  mbid: 
+  lastfm_id: 
+  youtube: https://youtu.be/6ACl8s_tBzE

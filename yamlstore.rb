@@ -27,15 +27,23 @@ class ChartInfo
     "https://youtu.be/#{link['video_id']}"
   end
 
-  def store
-    store.transaction do
-      store['top40'] ||= []
+  def populate_objects
+    @charts.singles.each do |song|
+      # song['ids'] = get_ids("#{song['title']}", "#{song['artist']}")
+      song['youtube'] = get_youtube("#{song['title']}", "#{song['artist']}")
+    end
+  end
+
+  def save
+    @store.transaction do
+      @store['top40'] ||= []
       @charts.singles.each do |song|
-        store['top40'].push Single.new(
+        @store['top40'].push Single.new(
           "#{song['title']}",
           "#{song['artist']}",
-          get_ids("#{song['title']}", "#{song['artist']}"),
-          get_youtube("#{song['title']}", "#{song['artist']}")
+          nil,
+          nil,
+          "#{song['youtube']}"
           )
       end
     end
@@ -44,5 +52,6 @@ end
 
 if __FILE__ == $PROGRAM_NAME
   singles_info = ChartInfo.new
-  singles_info.store
+  singles_info.populate_objects
+  singles_info.save
 end
