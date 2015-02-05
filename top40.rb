@@ -9,6 +9,7 @@ require 'youtube_search'
 
 APICache.store = Moneta.new(:File, dir: Dir.tmpdir)
 
+# Main class handling fetching the charts and displaying them
 class Top40
   def initialize(url: 'http://ben-major.co.uk/labs/top40/api/singles/')
     @url = url
@@ -37,6 +38,7 @@ class Top40
   end
 end
 
+# Parse command line arguments passed to the script
 class Parser
   def self.parse(args)
     options = OpenStruct.new
