@@ -11,9 +11,11 @@ APICache.store = Moneta.new(:File, dir: Dir.tmpdir)
 
 # Main class handling fetching the charts and displaying them
 class Top40
+  attr_reader :singles
+
   def initialize(url: 'http://ben-major.co.uk/labs/top40/api/singles/')
     @url = url
-    @singles = {}
+    fetch
   end
 
   def fetch
@@ -24,13 +26,13 @@ class Top40
     @singles = JSON.load(response)['entries']
   end
 
-  def update_info
-    @singles.each do |song|
-      link = YoutubeSearch.search(
-          "#{song['artist']} - #{song['title']}").first
-      song['link'] = "http://youtu.be/#{link['video_id']}"
-    end
-  end
+  # def update_info
+  #   @singles.each do |song|
+  #     link = YoutubeSearch.search(
+  #         "#{song['artist']} - #{song['title']}").first
+  #     song['link'] = "http://youtu.be/#{link['video_id']}"
+  #   end
+  # end
 
   def display(options)
     @singles[0..options.num - 1].each do |entry|
@@ -76,6 +78,4 @@ end
 
 options = Parser.parse(ARGV)
 fetcher = Top40.new
-fetcher.fetch
-fetcher.update_info
 fetcher.display(options)
