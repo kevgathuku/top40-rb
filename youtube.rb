@@ -10,21 +10,21 @@ ActiveRecord::Base.establish_connection(
 # ActiveRecord::Base.logger = Logger.new(STDOUT)
 
 class CreateApiRequests < ActiveRecord::Migration
-  def self.change
+  def change
     create_table :api_requests do |t|
       t.timestamps null: false
-      t.text :query, null: false
+      t.text :url, null: false
     end
 
-    add_index :api_requests, :query, unique: true
+    add_index :api_requests, :url, unique: true
   end
 end
 
 class ApiRequest < ActiveRecord::Base
-  validates :query, presence: true, uniqueness: true
+  validates :url, presence: true, uniqueness: true
 
   def self.cache(title, cache_policy)
-    find_or_initialize_by(query: title).cache(cache_policy) do
+    find_or_initialize_by(url: title).cache(cache_policy) do
       if block_given?
         yield
       end
@@ -47,23 +47,24 @@ class Youtube
   def initialize(title, artist)
     @title = title
     @artist = artist
-    @video_url = nil
+    @video_url = ""
+    fetch_link(artist, title)
   end
 
   def search_query
     "#{@artist} - #{@title}"
   end
 
-  def set_video_url=(search_query)
-    response = YoutubeSearch.search(search_query).first
-    @video_url = "https://youtu.be/#{response['video_id']}"
-    @video_url
+  def fetch_link(artist, title)
+    response = YoutubeSearch.search("#{@artist} - #{@title}").first
+    @video_url << "https://youtu.be/#{response['video_id']}"
   end
 end
 
 uptown = Youtube.new('Uptown Funk (feat. Bruno Mars)', 'Mark Ronson')
-query = uptown.search_query
-# CreateApiRequests.change
+query = uptown.video_url
+CreateApiRequests.new.migrate :up
 ApiRequest.cache(query, Youtube::CACHE_POLICY) do
-  puts uptown.video_url
+  puts self.url
 end
+
