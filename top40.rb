@@ -26,14 +26,6 @@ class Top40
     @singles = JSON.load(response)['entries']
   end
 
-  # def update_info
-  #   @singles.each do |song|
-  #     link = YoutubeSearch.search(
-  #         "#{song['artist']} - #{song['title']}").first
-  #     song['link'] = "http://youtu.be/#{link['video_id']}"
-  #   end
-  # end
-
   def display(options)
     @singles[0..options.num - 1].each do |entry|
       output = "#{entry['position']}. #{entry['artist']} - #{entry['title']}"
@@ -76,7 +68,7 @@ class Parser
   end
 end
 
-if __FILE__ == $0
+if __FILE__ == $PROGRAM_NAME
   options = Parser.parse(ARGV)
   fetcher = Top40.new
   fetcher.display(options)
