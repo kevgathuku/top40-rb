@@ -3,12 +3,12 @@
 require 'api_cache'
 require 'json'
 require 'moneta'
+require 'optparse'
 require 'tmpdir'
 require 'youtube_search'
 
 APICache.store = Moneta.new(:File, dir: Dir.tmpdir)
 
-# Source: https://developer.yahoo.com/ruby/ruby-cache.html
 class Top40
 
   def initialize(url: 'http://ben-major.co.uk/labs/top40/api/singles/')
@@ -40,6 +40,38 @@ class Top40
   end
 end
 
-fetcher = Top40.new
-fetcher.fetch
-fetcher.display
+
+class Parser
+
+  def self.parse(args)
+    options = OpenStruct.new
+    options.links = false
+    options.num = 10
+
+    opt_parser = OptionParser.new do |opts|
+      opts.banner = "Usage: top40.rb [options]"
+
+    opts.on('-n', '--num NUMBER', Integer, "Number of songs to display (Default: #{options.num})") do |n|
+      options.num = n
+    end
+
+      opts.on('-l', '--links', 'Display Youtube links along with songs') do |n|
+        options.links = true
+      end
+
+      opts.on("-h", "--help", "Prints this help") do
+        puts opts
+        exit
+      end
+    end
+
+    opt_parser.parse!(args)
+    return options
+  end
+end
+
+options = Parser.parse(ARGV)
+
+# fetcher = Top40.new
+# fetcher.fetch
+# fetcher.display
