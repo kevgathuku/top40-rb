@@ -76,6 +76,8 @@ class Parser
   end
 end
 
-options = Parser.parse(ARGV)
-fetcher = Top40.new
-fetcher.display(options)
+if __FILE__ == $0
+  options = Parser.parse(ARGV)
+  fetcher = Top40.new
+  fetcher.display(options)
+end
