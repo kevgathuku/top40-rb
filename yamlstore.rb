@@ -17,8 +17,22 @@ class ChartInfo
   end
 
   def get_youtube(artist, track)
+    cached = @store.transaction(true) do
+      @store['top40'].select {
+        |song| song.artist == artist && song.title == title
+      }.first
+    end
+    return cached.youtube unless cached.youtube.empty?
+  rescue NoMethodError => e
     link = YoutubeSearch.search("#{artist} - #{track}").first
     "https://youtu.be/#{link['video_id']}"
+  end
+
+
+  def populate_objects
+    @charts.singles.each do |song|
+      song['youtube'] = get_youtube("#{song['title']}", "#{song['artist']}")
+    end
   end
 
   def save
@@ -28,7 +42,7 @@ class ChartInfo
         @store['top40'].push Single.new(
           "#{song['title']}",
           "#{song['artist']}",
-          get_youtube("#{song['title']}", "#{song['artist']}")
+          "#{song['youtube']}"
           )
       end
     end
@@ -37,5 +51,6 @@ end
 
 if __FILE__ == $PROGRAM_NAME
   singles_info = ChartInfo.new
+  singles_info.populate_objects
   singles_info.save
 end
