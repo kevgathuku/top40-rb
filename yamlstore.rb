@@ -1,37 +1,24 @@
 #!/usr/bin/env ruby
 
-require 'dotenv'
-require 'lastfm'
+# require 'dotenv'
+# require 'lastfm'
 require 'yaml/store'
 require 'youtube_search'
 require File.join(File.dirname(__FILE__), 'top40')
-Dotenv.load
+# Dotenv.load
 
-Single = Struct.new :title, :artist, :mbid, :lastfm_id, :youtube
+Single = Struct.new :title, :artist, :youtube
 
 # Repsonsible for storing info related to the Top 40 Singles
 class ChartInfo
   def initialize
     @charts = Top40.new
     @store = YAML::Store.new 'top40singles.yaml'
-    @lastfm = Lastfm.new(ENV['LASTFM_API_KEY'], ENV['LASTFM_API_SECRET'])
-  end
-
-  def get_ids(artist, track)
-    track = @lastfm.track.get_info(artist: artist, track: track)
-    [track['mbid'], track['id']]
   end
 
   def get_youtube(artist, track)
     link = YoutubeSearch.search("#{artist} - #{track}").first
     "https://youtu.be/#{link['video_id']}"
-  end
-
-  def populate_objects
-    @charts.singles.each do |song|
-      # song['ids'] = get_ids("#{song['title']}", "#{song['artist']}")
-      song['youtube'] = get_youtube("#{song['title']}", "#{song['artist']}")
-    end
   end
 
   def save
@@ -41,9 +28,7 @@ class ChartInfo
         @store['top40'].push Single.new(
           "#{song['title']}",
           "#{song['artist']}",
-          nil,
-          nil,
-          "#{song['youtube']}"
+          get_youtube("#{song['title']}", "#{song['artist']}")
           )
       end
     end
@@ -52,6 +37,5 @@ end
 
 if __FILE__ == $PROGRAM_NAME
   singles_info = ChartInfo.new
-  singles_info.populate_objects
   singles_info.save
 end
