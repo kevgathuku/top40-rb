@@ -18,12 +18,14 @@ class ChartInfo
 
   def get_youtube(artist, track)
     cached = @store.transaction(true) do
+      @store.abort if @store.root?('top40') == false
       @store['top40'].select {
         |song| song.artist == artist && song.title == title
       }.first
     end
     return cached.youtube unless cached.youtube.empty?
   rescue NoMethodError => e
+    puts e
     link = YoutubeSearch.search("#{artist} - #{track}").first
     "https://youtu.be/#{link['video_id']}"
   end
