@@ -28,7 +28,11 @@ class Top40
   end
 
   def get_youtube(artist, track)
-    APICache.get("#{artist} - #{track}", fail: ['Read failed']) do
+    APICache.get(
+      "#{artist} - #{track}",
+      cache: 43_200, # After 12 hours, fetch new data
+      valid: 86_400, # Maximum time to use old data
+      fail: ['Getting Youtube link failed']) do
       link = YoutubeSearch.search("#{artist} - #{track}").first
       "https://youtu.be/#{link['video_id']}"
     end
