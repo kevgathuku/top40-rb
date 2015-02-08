@@ -8,9 +8,11 @@ It simply fetches the songs in the current UK Top 40 charts and can also display
 
 ## Usage
 
-`ruby top40`          - Displays the top 10 songs in the current UK Top 40 Charts  
-`ruby top40 N`        - Displays the top `N` songs in the current UK Top 40 Charts i.e. up to a limit of 40  
-`ruby top40 N links`  - Displays the top `N` songs in the charts along with their Youtube links  
+`ruby top40.rb`                  - Displays the top 10 songs in the current UK Top 40 Charts  
+`ruby top40.rb -n NUM`           - Displays the top `NUM` songs in the current UK Top 40 Charts
+                                   i.e. up to a limit of 40  
+`ruby top40 --links`   - Displays the top 10 songs in the charts along with their Youtube links 
+`ruby top40.rb -n NUM --links`   - Displays the top `NUM` songs in the charts along with their Youtube links  
 
 ## Why 
 
@@ -20,3 +22,4 @@ The idea is to have as little dependencies as possible.
 
 Youtube Access is instead enabled by the excellent [youtube_search](https://rubygems.org/gems/youtube_search) gem
 since Google APIs have no native support for Ruby
+This script also utilizes the awesome [Moneta](https://rubygems.org/gems/moneta) and [APICache](https://rubygems.org/gems/api_cache) gems for caching results.
