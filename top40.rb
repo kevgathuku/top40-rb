@@ -16,6 +16,7 @@ class Top40
   def initialize(url: 'http://ben-major.co.uk/labs/top40/api/singles/')
     @url = url
     fetch
+    populate_youtube
   end
 
   def fetch
@@ -26,10 +27,23 @@ class Top40
     @singles = JSON.load(response)['entries']
   end
 
+  def get_youtube(artist, track)
+    cached = APICache.get("#{artist} - #{track}", fail: ['Read failed']) do
+      link = YoutubeSearch.search("#{artist} - #{track}").first
+      "https://youtu.be/#{link['video_id']}"
+    end
+  end
+
+  def populate_youtube
+    @singles.each do |song|
+      song['youtube'] = get_youtube("#{song['title']}", "#{song['artist']}")
+    end
+  end
+
   def display(options)
     @singles[0..options.num - 1].each do |entry|
       output = "#{entry['position']}. #{entry['artist']} - #{entry['title']}"
-      output << " (#{entry['link']})" if options.links
+      output << " (#{entry['youtube']})" if options.links
       puts output
     end
   end
