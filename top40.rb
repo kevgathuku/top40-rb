@@ -11,9 +11,12 @@ APICache.store = Moneta.new(:File, dir: Dir.tmpdir)
 
 # Main class handling fetching the charts and displaying them
 class Top40
+  attr_reader :singles
+
   def initialize(url: 'http://ben-major.co.uk/labs/top40/api/singles/')
     @url = url
-    @singles = {}
+    fetch
+    populate_youtube
   end
 
   def fetch
@@ -24,16 +27,28 @@ class Top40
     @singles = JSON.load(response)['entries']
   end
 
+  def get_youtube(artist, track)
+    APICache.get(
+      "#{artist} - #{track}",
+      cache: 43_200, # After 12 hours, fetch new data
+      valid: 86_400, # Maximum time to use old data
+      fail: ['Getting Youtube link failed']) do
+      link = YoutubeSearch.search("#{artist} - #{track}").first
+      "https://youtu.be/#{link['video_id']}"
+    end
+  end
+
+  def populate_youtube
+    @singles.each do |song|
+      song['youtube'] = get_youtube("#{song['title']}", "#{song['artist']}")
+    end
+  end
+
   def display(options)
     @singles[0..options.num - 1].each do |entry|
       output = "#{entry['position']}. #{entry['artist']} - #{entry['title']}"
-      if options.links
-        link = YoutubeSearch.search(
-          "#{entry['artist']} - #{entry['title']}").first
-        puts "#{output} (http://youtu.be/#{link['video_id']})"
-      else
-        puts output
-      end
+      output << " (#{entry['youtube']})" if options.links
+      puts output
     end
   end
 end
@@ -71,7 +86,8 @@ class Parser
   end
 end
 
-options = Parser.parse(ARGV)
-fetcher = Top40.new
-fetcher.fetch
-fetcher.display(options)
+if __FILE__ == $PROGRAM_NAME
+  options = Parser.parse(ARGV)
+  fetcher = Top40.new
+  fetcher.display(options)
+end
