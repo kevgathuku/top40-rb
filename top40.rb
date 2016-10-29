@@ -13,7 +13,7 @@ APICache.store = Moneta.new(:File, dir: Dir.tmpdir)
 class Top40
   attr_reader :singles
 
-  def initialize(url: 'http://ben-major.co.uk/labs/top40/api/singles/')
+  def initialize(url: 'https://wckb0ftk67.execute-api.eu-west-1.amazonaws.com/dev/singles')
     @url = url
     fetch
     populate_youtube
@@ -23,6 +23,7 @@ class Top40
     response = APICache.get(
       @url,
       cache: 43_200,
+      timeout: 15,
       fail: 'Failed to retrieve data')
     @singles = JSON.load(response)['entries']
   end
