@@ -1,3 +1,13 @@
+## WARNING
+
+This is now deprecated and no longer maintained.
+
+- It uses an [older deprecated API](https://github.com/grosser/youtube_search/issues/12) for searching YouTube.
+
+- The new API version explicitly requires a `DEVELOPER_KEY` which makes this pointless
+to update as I was writing this script to avoid having to use a `DEVELOPER_KEY`.
+
+
 # top40-rb
 A ruby script to display current UK Top 40 Charts and their Youtube links
 
