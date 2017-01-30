@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-
+require 'dotenv/load'
 require 'api_cache'
 require 'json'
 require 'moneta'
