@@ -5,15 +5,24 @@ require 'json'
 require 'moneta'
 require 'optparse'
 require 'tmpdir'
-require 'youtube_search'
+require 'yourub'
+
+YOURUB_OPTIONS = {
+    developer_key: ENV['YOUTUBE_DEVELOPER_KEY'],
+    application_name: 'top40-rb',
+    application_version: 2.0,
+    log_level: 3
+}
 
 APICache.store = Moneta.new(:File, dir: Dir.tmpdir)
+$client = Yourub::Client.new(YOURUB_OPTIONS)
+
 
 # Main class handling fetching the charts and displaying them
 class Top40
   attr_reader :singles
 
-  def initialize(url: 'https://wckb0ftk67.execute-api.eu-west-1.amazonaws.com/dev/singles')
+  def initialize(url='https://wckb0ftk67.execute-api.eu-west-1.amazonaws.com/dev/singles')
     @url = url
     fetch
     populate_youtube
@@ -29,13 +38,17 @@ class Top40
   end
 
   def get_youtube(artist, track)
+    link = nil
     APICache.get(
       "#{artist} - #{track}",
       cache: 43_200, # After 12 hours, fetch new data
       valid: 86_400, # Maximum time to use old data
       fail: ['Getting Youtube link failed']) do
-        link = YoutubeSearch.search("#{artist} - #{track}").first
-        "https://youtu.be/#{link['video_id']}"
+        $client.search(query: "#{artist} - #{track}", max_results: 1) do |result|
+            pp result['id']
+            link = result['id']
+        end
+        "https://youtu.be/#{link}"
     end
   end
 
