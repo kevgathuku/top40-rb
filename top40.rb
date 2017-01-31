@@ -15,13 +15,13 @@ class Top40
 
   def display
     if @options.links
-        @singles_with_links[0..@options.num - 1].each do |entry|
+        @singles_with_links.take(@options.num).each do |entry|
           output = "#{entry['position']}. #{entry['artist']} - #{entry['title']}"
           output << " (#{entry[:youtube_link]})"
           puts output
         end
     else
-        @singles[0..@options.num - 1].each do |entry|
+        @singles.take(@options.num).each do |entry|
           output = "#{entry['position']}. #{entry['artist']} - #{entry['title']}"
           puts output
         end
