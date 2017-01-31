@@ -54,7 +54,7 @@ class DataFetcher
         title, artist = song['title'], song['artist']
         link = fetch_youtube_link(title, artist)
         merge_data = {
-          'youtube_link': "https://youtu.be/#{link}"
+          youtube_link: "https://youtu.be/#{link}"
         }
         song.merge(merge_data)
     }

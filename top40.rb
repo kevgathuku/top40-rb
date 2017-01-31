@@ -17,7 +17,7 @@ class Top40
     if @options.links
         @singles_with_links[0..@options.num - 1].each do |entry|
           output = "#{entry['position']}. #{entry['artist']} - #{entry['title']}"
-          output << " (#{entry['youtube_link']})"
+          output << " (#{entry[:youtube_link]})"
           puts output
         end
     else
