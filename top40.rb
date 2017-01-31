@@ -22,7 +22,9 @@ $client = Yourub::Client.new(YOURUB_OPTIONS)
 class Top40
   attr_reader :singles
 
-  def initialize(url='https://wckb0ftk67.execute-api.eu-west-1.amazonaws.com/dev/singles')
+  TOP40_API_URL = 'https://wckb0ftk67.execute-api.eu-west-1.amazonaws.com/dev/singles'
+
+  def initialize(url=TOP40_API_URL)
     @url = url
     fetch
     populate_youtube
