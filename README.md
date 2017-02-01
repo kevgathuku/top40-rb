@@ -1,26 +1,18 @@
-## WARNING
-
-This is now deprecated and no longer maintained.
-
-- It uses an [older deprecated API](https://github.com/grosser/youtube_search/issues/12) for searching YouTube.
-
-- The new API version explicitly requires a `DEVELOPER_KEY` which makes this pointless
-to update as I was writing this script to avoid having to use a `DEVELOPER_KEY`.
-
-
 # top40-rb
 A ruby script to display current UK Top 40 Charts and their Youtube links
 
-This is the ruby port of my Python [`top-40`](https://github.com/kevgathuku/top40) program
+This is the ruby port of the Python [`top-40`](https://github.com/kevgathuku/top40) program
 
-It simply fetches the songs in the current UK Top 40 charts and can also display their Youtube links on the command line
+It fetches the songs in the current UK Top 40 charts and can optionally display
+their Youtube links on the command line
 
 ## Installation
 
 Clone the repository:
 
 ```sh
-git clone https://github.com/kevgathuku/top40-rb```
+git clone https://github.com/kevgathuku/top40-rb
+```
 
 Install the package dependencies:
 
@@ -28,6 +20,14 @@ Install the package dependencies:
 cd top40-rb
 bundle install
 ```
+
+Create a `.env` file where we will store our API Key to enable accessing YouTube data.
+
+```
+YOUTUBE_DEVELOPER_KEY='add-your-api-key-here'
+```
+
+To obtain one, please follow the instructions [here](https://developers.google.com/youtube/registering_an_application#Create_API_Keys)
 
 ## Usage
 
@@ -39,10 +39,10 @@ bundle install
 
 ## Why
 
-The script was rewritten in Ruby to avoid the need for a `DEVELOPER_KEY` when accessing YouTube.
+The main purpose of this script is to be able to access the current UK Top 40 Charts
+from the command line, and without having to search YouTube for every song individually,
+when you can just do this from the comfort of the command line 😄 
 
-The idea is to have as little dependencies as possible.
-
-Youtube Access is instead enabled by the excellent [youtube_search](https://rubygems.org/gems/youtube_search) gem
-since Google APIs have no native support for Ruby
+Youtube Access is instead enabled by the excellent
+[yt](https://rubygems.org/gems/yt) gem.
 This script also utilizes the awesome [Moneta](https://rubygems.org/gems/moneta) and [APICache](https://rubygems.org/gems/api_cache) gems for caching results.
