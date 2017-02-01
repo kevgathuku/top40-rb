@@ -32,20 +32,14 @@ class DataFetcher
   end
 
   def fetch_youtube_link(artist, track)
-    # Generate a unique cache key
-    cache_key = [
-      'link',
-      Digest::MD5.hexdigest("#{artist}:#{track}"),
-    ].join(':')
-    begin
-      APICache.get(
-        cache_key,
-        cache: 43_200, # After 12 hours, fetch new data
-        valid: 86_400, # Maximum time to use old data
-        timeout: 30
-      )
-    rescue
-      @videos.where(q: "#{artist} - #{track}", order: 'relevance').first.id
+    # Generate a unique cache key from the artist and track
+    cache_key = Digest::MD5.hexdigest("#{artist}#{track}")
+    APICache.get(cache_key, cache: 43_200) do
+      begin
+        @videos.where(q: "#{artist} - #{track}", order: 'relevance').first.id
+      rescue
+        puts "Could not fetch the YouTube Link for #{artist} - #{track}"
+      end
     end
   end
 
