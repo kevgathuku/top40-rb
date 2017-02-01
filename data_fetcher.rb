@@ -12,23 +12,23 @@ Yt.configure do |config|
 end
 
 class DataFetcher
-  attr_reader :singles
+  attr_accessor :singles, :url
+
   TOP40_API_URL = 'https://wckb0ftk67.execute-api.eu-west-1.amazonaws.com/dev/singles'
 
-  def initialize(url=TOP40_API_URL)
+  def initialize(api_url=TOP40_API_URL)
     @videos = Yt::Collections::Videos.new
-    @url = url
+    url = api_url
   end
 
   def fetch_singles
     response = APICache.get(
-      @url,
+      url,
       cache: 43_200,
       timeout: 15,
       fail: 'Failed to retrieve data'
     )
-    @singles = JSON.load(response)['entries']
-    @singles
+    singles = JSON.load(response)['entries']
   end
 
   def fetch_youtube_link(artist, track)
@@ -50,7 +50,7 @@ class DataFetcher
   end
 
   def fetch_singles_with_links
-    @singles_with_links = @singles.map { |song|
+    singles.map { |song|
         title, artist = song['title'], song['artist']
         link = fetch_youtube_link(title, artist)
         merge_data = {
@@ -58,6 +58,5 @@ class DataFetcher
         }
         song.merge(merge_data)
     }
-    @singles_with_links
   end
 end
